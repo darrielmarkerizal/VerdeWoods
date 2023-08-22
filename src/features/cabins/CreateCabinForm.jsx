@@ -47,7 +47,9 @@ const Error = styled.span`
 `;
 
 function CreateCabinForm() {
-  const { register, handleSubmit, reset, getValues } = useForm();
+  const { register, handleSubmit, reset, getValues, formState } = useForm();
+  const { errors } = formState;
+  console.log(errors);
   const queryClient = useQueryClient();
   const { mutate, isLoading: isCreating } = useMutation({
     mutationFn: createCabin,
@@ -79,6 +81,7 @@ function CreateCabinForm() {
           id="name"
           {...register("name", { required: "This field is required" })}
         />
+        {errors?.name?.message && <Error>{errors.name.message}</Error>}
       </FormRow>
 
       <FormRow>

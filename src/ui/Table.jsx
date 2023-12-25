@@ -87,7 +87,10 @@ function Row({ children }) {
     </StyledRow>
   );
 }
-function Body({ children }) {}
+function Body({ data, render }) {
+  if (!data.length) return <Empty>No cabins found</Empty>;
+  return <StyledBody>{data.map(render)}</StyledBody>;
+}
 
 Table.Header = Header;
 Table.Row = Row;
@@ -101,6 +104,11 @@ Table.propTypes = {
 Header.propTypes = {
   columns: PropTypes.number.isRequired,
   children: PropTypes.node.isRequired,
+};
+
+Body.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  render: PropTypes.func.isRequired,
 };
 
 Row.propTypes = {

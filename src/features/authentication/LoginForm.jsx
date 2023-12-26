@@ -3,8 +3,8 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import Input from "../../ui/Input";
 import FormRowVertical from "../../ui/FormRowVertical";
-import SpinnerMini from "../../ui/SpinnerMini";
 import { useLogin } from "./useLogin";
+import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -38,6 +38,7 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
+
       <FormRowVertical label="Password">
         <Input
           type="password"
@@ -50,7 +51,7 @@ function LoginForm() {
       </FormRowVertical>
       <FormRowVertical>
         <Button size="large" disabled={isLoading}>
-          {!isLoading ? "Login" : <SpinnerMini />}
+          {!isLoading ? "Log in" : <SpinnerMini />}
         </Button>
       </FormRowVertical>
     </Form>

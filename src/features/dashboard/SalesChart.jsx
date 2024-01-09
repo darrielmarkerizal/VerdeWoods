@@ -12,6 +12,8 @@ import {
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
 import PropTypes from "prop-types";
+import { eachDayOfInterval, format, isDate, subDays } from "date-fns";
+import { isSameDay } from "date-fns/esm";
 
 const StyledSalesChart = styled(DashboardBox)`
     grid-column: 1 / -1;
@@ -67,6 +69,38 @@ const fakeData = [
 
 function SalesChart({ bookings, numDays }) {
     const { isDarkMode } = useDarkMode();
+
+    if (typeof numDays !== 'number' || numDays <= 0) {
+        throw new Error('numDays must be a positive integer');
+    }
+    
+    const allDates = eachDayOfInterval({
+        start: subDays(new Date(), numDays - 1),
+        end: new Date(),
+    });
+    console.log(allDates)
+
+    
+const data = allDates.map((date) => {
+    if (!bookings) {
+        return {
+            label: format(date, "MMM dd"),
+            totalSales: 0,
+            extrasSales: 0,
+        };
+    }
+
+    return {
+        label: format(date, "MMM dd"),
+        totalSales: bookings
+            .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+            .reduce((acc, cur) => acc + cur.totalPrice, 0),
+        extrasSales: bookings
+            .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+            .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+    };
+});
+
     const colors = isDarkMode
         ? {
               totalSales: { stroke: "#4f46e5", fill: "#4f46e5" },
@@ -85,7 +119,7 @@ function SalesChart({ bookings, numDays }) {
         <StyledSalesChart>
             <Heading as="h2">Sales</Heading>
             <ResponsiveContainer height={300} width="100%">
-                <AreaChart data={fakeData}>
+                <AreaChart data={data}>
                     <XAxis
                         dataKey="label"
                         tick={{ fill: colors.text }}

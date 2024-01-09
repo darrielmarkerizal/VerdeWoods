@@ -11,6 +11,7 @@ import {
     YAxis,
 } from "recharts";
 import { useDarkMode } from "../../context/DarkModeContext";
+import PropTypes from "prop-types";
 
 const StyledSalesChart = styled(DashboardBox)`
     grid-column: 1 / -1;
@@ -64,7 +65,7 @@ const fakeData = [
     { label: "Feb 06", totalSales: 14500000, extrasSales: 4000000 },
 ];
 
-function SalesChart() {
+function SalesChart({ bookings, numDays }) {
     const { isDarkMode } = useDarkMode();
     const colors = isDarkMode
         ? {
@@ -126,5 +127,10 @@ function SalesChart() {
         </StyledSalesChart>
     );
 }
+
+SalesChart.propTypes = {
+    bookings: PropTypes.array.isRequired,
+    numDays: PropTypes.number.isRequired,
+};
 
 export default SalesChart;

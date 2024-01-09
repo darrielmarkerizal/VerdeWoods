@@ -70,36 +70,39 @@ const fakeData = [
 function SalesChart({ bookings, numDays }) {
     const { isDarkMode } = useDarkMode();
 
-    if (typeof numDays !== 'number' || numDays <= 0) {
-        throw new Error('numDays must be a positive integer');
+    if (typeof numDays !== "number" || numDays <= 0) {
+        throw new Error("numDays must be a positive integer");
     }
-    
+
     const allDates = eachDayOfInterval({
         start: subDays(new Date(), numDays - 1),
         end: new Date(),
     });
-    console.log(allDates)
+    console.log(allDates);
 
-    
-const data = allDates.map((date) => {
-    if (!bookings) {
+    const data = allDates.map((date) => {
+        if (!bookings) {
+            return {
+                label: format(date, "MMM dd"),
+                totalSales: 0,
+                extrasSales: 0,
+            };
+        }
+
         return {
             label: format(date, "MMM dd"),
-            totalSales: 0,
-            extrasSales: 0,
+            totalSales: bookings
+                .filter((booking) =>
+                    isSameDay(date, new Date(booking.created_at))
+                )
+                .reduce((acc, cur) => acc + cur.totalPrice, 0),
+            extrasSales: bookings
+                .filter((booking) =>
+                    isSameDay(date, new Date(booking.created_at))
+                )
+                .reduce((acc, cur) => acc + cur.extrasPrice, 0),
         };
-    }
-
-    return {
-        label: format(date, "MMM dd"),
-        totalSales: bookings
-            .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-            .reduce((acc, cur) => acc + cur.totalPrice, 0),
-        extrasSales: bookings
-            .filter((booking) => isSameDay(date, new Date(booking.created_at)))
-            .reduce((acc, cur) => acc + cur.extrasPrice, 0),
-    };
-});
+    });
 
     const colors = isDarkMode
         ? {
@@ -117,7 +120,10 @@ const data = allDates.map((date) => {
 
     return (
         <StyledSalesChart>
-            <Heading as="h2">Sales</Heading>
+            <Heading as="h2">
+                Sales from {format(allDates.at(0), "MMM dd yyyy")} &mdash;{" "}
+                {format(allDates.at(-1), "MMM dd yyyy")}{" "}
+            </Heading>
             <ResponsiveContainer height={300} width="100%">
                 <AreaChart data={data}>
                     <XAxis

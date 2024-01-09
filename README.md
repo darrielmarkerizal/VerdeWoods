@@ -1,6 +1,6 @@
 # VerdeWoods
 
-VerdeWoods is a cabin management system built using React.js, Tailwind CSS, Vite, and Supabase. This system allows users to book and manage cabins, providing functionalities for adding, editing, and deleting cabin details.
+VerdeWoods is a cabin management system built using React.js, Vite, and Supabase. This system allows users to book and manage cabins, providing functionalities for adding, editing, and deleting cabin details.
 
 ## Table of Contents
 
@@ -10,7 +10,7 @@ VerdeWoods is a cabin management system built using React.js, Tailwind CSS, Vite
 - [Getting Started](#getting-started)
 - [Development](#development)
 - [Contributing](#contributing)
-- [License](#license)
+- [Online Demo](#online-demo)
 
 ## Introduction
 
@@ -30,7 +30,6 @@ VerdeWoods is a system designed for managing cabins, similar to a hotel manageme
 ## Technologies Used
 
 - [React.js](https://reactjs.org/) - JavaScript library for building user interfaces
-- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS framework
 - [Vite](https://vitejs.dev/) - Frontend build tool that significantly speeds up development
 - [Supabase](https://supabase.io/) - Open-source Firebase alternative with real-time and RESTful APIs
 
@@ -71,11 +70,10 @@ During development, you can use the following npm scripts:
 
 If you'd like to contribute to VerdeWoods, please follow our [contribution guidelines](CONTRIBUTING.md).
 
-## License
+## Online Demo
 
-This project is licensed under the [MIT License](LICENSE).
+View the online demo at [https://verde-woods.vercel.app/](https://verde-woods.vercel.app/).
 
-```
-
-Feel free to further customize it according to your needs.
-```
+To access the demo, log in with the following credentials:
+- Email: befol65362@taobudao.com
+- Password: 12345678
